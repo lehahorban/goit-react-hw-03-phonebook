@@ -16,8 +16,16 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState);
+    console.log(this.state);
+    if (this.state.contacts !== prevState.contacts) {
+      console.log('поле обновилось');
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContacts = getContact => {
-    console.log(getContact);
     const { contacts } = this.state;
     const { name, number } = getContact;
     const contact = contacts.find(
@@ -30,7 +38,7 @@ class App extends Component {
     return this.setState({
       contacts: [
         ...contacts,
-        { name: name, number: number, id: shortid.generate() },
+        { id: shortid.generate(), name: name, number: number },
       ],
     });
   };
