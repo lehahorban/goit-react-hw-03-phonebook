@@ -16,11 +16,19 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const contactsParse = JSON.parse(contacts);
+
+    if (contactsParse) {
+      this.setState({
+        contacts: contactsParse,
+      });
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevState);
-    console.log(this.state);
     if (this.state.contacts !== prevState.contacts) {
-      console.log('поле обновилось');
       localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
     }
   }
